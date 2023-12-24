@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.schoolproject.mapper.CourseMapper">
+    <resultMap id="BaseResultMap" type="com.example.schoolproject.pojo.Course">
+        <!-- column:库里字段名， property：java属性-->
+        <result column="id" jdbcType="INTEGER" property="id" />
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="hours" jdbcType="VARCHAR" property="hours" />
+        <result column="schools" jdbcType="VARCHAR" property="schools" />
+        <result column="image" jdbcType="VARCHAR" property="url" />
+        <result column="teacher_name" jdbcType="VARCHAR" property="teacher_name" />
+        <result column="phone" jdbcType="VARCHAR" property="teacher_phone" />
+        <result column="teacher_id" jdbcType="INTEGER" property="teacher_id" />
+
+
+    </resultMap>
+
+
+    <select id="getCourseList" resultMap="BaseResultMap">
+        select c.* ,t.name as teacher_name,t.phone
+        from course  c
+                 inner join teacher_info t on c.teacher_id = t.id
+        limit #{start},#{pageSize};
+    </select>
+    <select id="selectAll" resultMap="BaseResultMap">
+        select c.* ,t.name as teacher_name,t.phone
+        from course  c
+                 inner join teacher_info t on c.teacher_id = t.id
+    </select>
+    <select id="select" resultMap="BaseResultMap">
+        select * from library.course where id=#{id}
+    </select>
+    <insert id="addCourse" >
+        insert library.course(name,hours,schools,teacher_id) value (#{name},#{hours},#{schools},#{teacher_id})
+    </insert>
+    <update id="updateCourse">
+        update course  set name=#{name},hours=#{hours},schools=#{schools},image=#{url},teacher_id=#{teacher_id} where id=#{id}
+    </update>
+    <delete id="deleteCourse">
+        delete from library.course where id=#{id}
+    </delete>
+    <select id="selectName" resultMap="BaseResultMap">
+        select id,name from teacher_info ;
+    </select>
+</mapper>

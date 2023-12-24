@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/s.css">
+    <script type="text/javascript" th:src="@{/webjars/jquery/3.5.1/jquery.min.js}"></script>
+    <script>
+
+       $.ajax({
+           url:'/Course/teacher_name',    //后端接口的url,和注解中一致
+           method:'post',
+           success:function (list){   //res为后端拿到的数据
+                   for (var i = 0; i < list.length; i++) {
+                       //jq动态添加选项
+
+                       $("#select").append(`<option value=${list[i].id}>${list[i].name}</option>`);}
+           },
+       });
+    </script>
+</head>
+<body>
+<h1>修改课程信息</h1>
+<hr>
+<form action="/Course/doUpdate" method="post">
+
+    <input type="hidden" name="id" th:value="${course.id}" />
+
+    <div>
+        <label>
+            课程名：<input type="text" name="name" th:value="${course.name}">
+        </label>
+    </div>
+    <div>
+        <label>
+            课时：<input type="text" name="hours" th:value="${course.hours}">
+        </label>
+    </div>
+    <div>
+        <label>
+            开设学院：<input type="text" name="schools" th:value="${course.schools}">
+        </label>
+    </div>
+    <!--<div>
+        <label>
+            图片：<input type="file" name="url"  accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
+                      style="opacity:1" onchange="Img(this)" th:value="${course.url}"/>
+        </label>
+    </div>-->
+   <!-- <form action="teacher_name" method="get">
+
+        教师： <select> <option th:each="item : ${list}" th:value="${item.id}" th:text="${item.name}" th:selected="${item.id == selectedId}"></option> </select>
+
+        </select>
+    </form>-->
+    教师： <select id="select" name="teacher_id" ></select>
+
+
+
+    <br>
+    <input type="submit" value="修改">
+    <br>
+    <span th:text="${errorMessage}"></span>
+</form>
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/s.css">
+    <script>
+        function Img(obj) {
+            var imgFile = obj.files[0];
+            console.log(imgFile);
+            var img = new Image();
+            var fr = new FileReader();
+            fr.onload = function () {
+                $('#img').attr('src', fr.result);
+            }
+            fr.readAsDataURL(imgFile);
+        }
+    </script>
+</head>
+<body>
+<h1>添加课程</h1>
+<hr>
+<form action="doInsert" method="post">
+    <div>
+        <label>
+            课程名：<input type="text" name="name">
+        </label>
+    </div>
+    <div>
+        <label>
+            课时：<input type="text" name="hours">
+        </label>
+    </div>
+    <div>
+        <label>
+            开设学院：<input type="text" name="schools">
+        </label>
+    </div>
+    <div>
+        <label>
+            图片：<input type="file" name="url" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"
+                      style="opacity:1" onchange="Img(this)"/>
+        </label>
+    </div>
+    <br>
+    <input type="submit" value="添加">
+</form>
+</body>
+</html>
